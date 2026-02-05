@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipe Collection</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="yes.png">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Recipe Box</h1>
+            <p class="tagline">Delicious discoveries, perfectly organized 🍳</p>
+        </header>
+        
+        <div class="search-filter-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by recipe name or ingredient...">
+            </div>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Time</label>
+                    <select id="timeFilter">
+                        <option value="">Any Time</option>
+                        <option value="quick">Under 30 min</option>
+                        <option value="medium">30-60 min</option>
+                        <option value="long">Over 60 min</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Difficulty</label>
+                    <select id="difficultyFilter">
+                        <option value="">Any Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-pills">
+            <button class="category-pill all active" data-category="all">All Recipes</button>
+            <button class="category-pill breakfast" data-category="breakfast">🥞 Breakfast</button>
+            <button class="category-pill desserts" data-category="desserts">🍰 Desserts</button>
+            <button class="category-pill filipino" data-category="filipino">🇵🇭 Filipino Food</button>
+            <button class="category-pill quick" data-category="quick">⚡ Quick Meals</button>
+        </div>
+        
+        <div class="recipes-grid" id="recipesGrid">
+            <!-- Recipe cards will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            No recipes found. Try adjusting your filters! 🔍
+        </div>
+    </div>
+    
+    <button class="add-recipe-btn" title="Add New Recipe">+</button>
+    
+    <!-- Modal -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalHeader">
+                <button class="close-modal" id="closeModal">×</button>
+                <button class="jump-to-recipe" onclick="document.getElementById('recipeContent').scrollIntoView({behavior: 'smooth'})">
+                    Jump to Recipe ↓
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Recipe details will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Your Script -->
+    <script src="script-supabase.js"></script>
+</body>
+</html>
