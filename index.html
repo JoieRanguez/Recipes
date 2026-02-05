@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipe Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Karla:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Recipe Box</h1>
+            <p class="tagline">Delicious discoveries, perfectly organized 🍳</p>
+        </header>
+        
+        <div class="search-filter-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by recipe name or ingredient...">
+            </div>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Time</label>
+                    <select id="timeFilter">
+                        <option value="">Any Time</option>
+                        <option value="quick">Under 30 min</option>
+                        <option value="medium">30-60 min</option>
+                        <option value="long">Over 60 min</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Difficulty</label>
+                    <select id="difficultyFilter">
+                        <option value="">Any Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category-pills">
+            <button class="category-pill all active" data-category="all">All Recipes</button>
+            <button class="category-pill breakfast" data-category="breakfast">🥞 Breakfast</button>
+            <button class="category-pill desserts" data-category="desserts">🍰 Desserts</button>
+            <button class="category-pill filipino" data-category="filipino">🇵🇭 Filipino Food</button>
+            <button class="category-pill quick" data-category="quick">⚡ Quick Meals</button>
+        </div>
+        
+        <div class="recipes-grid" id="recipesGrid">
+            <!-- Recipe cards will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            No recipes found. Try adjusting your filters! 🔍
+        </div>
+        
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🍽️</div>
+            <h2>No Recipes Yet!</h2>
+            <p>Start building your collection by clicking the + button below</p>
+        </div>
+    </div>
+    
+    <button class="add-recipe-btn" id="addRecipeBtn" title="Add New Recipe">+</button>
+    
+    <!-- Add/Edit Recipe Form Modal -->
+    <div class="modal" id="recipeFormModal">
+        <div class="modal-content form-modal">
+            <div class="form-modal-header">
+                <h2 id="formModalTitle">Add New Recipe</h2>
+                <button class="close-modal" id="closeFormModal">×</button>
+            </div>
+            <div class="form-modal-body">
+                <form id="recipeForm">
+                    <input type="hidden" id="recipeId">
+                    
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="recipeTitle">Recipe Name *</label>
+                            <input type="text" id="recipeTitle" required placeholder="e.g., Chocolate Chip Cookies">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipeDescription">Description *</label>
+                            <textarea id="recipeDescription" required placeholder="What makes this recipe special?"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipeEmoji">Emoji</label>
+                                <input type="text" id="recipeEmoji" placeholder="🍪" maxlength="2">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="recipeCategory">Category *</label>
+                                <select id="recipeCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="desserts">Desserts</option>
+                                    <option value="filipino">Filipino Food</option>
+                                    <option value="quick">Quick Meals</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Timing & Details</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prepTime">Prep Time *</label>
+                                <input type="text" id="prepTime" required placeholder="e.g., 15 min">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cookTime">Cook Time *</label>
+                                <input type="text" id="cookTime" required placeholder="e.g., 30 min">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="totalTime">Total Time *</label>
+                                <input type="text" id="totalTime" required placeholder="e.g., 45 min">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="servings">Servings *</label>
+                                <input type="number" id="servings" required placeholder="4">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="difficulty">Difficulty *</label>
+                                <select id="difficulty" required>
+                                    <option value="">Select Difficulty</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Dietary Options</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" value="vegetarian" class="dietary-checkbox"> Vegetarian</label>
+                                <label><input type="checkbox" value="vegan" class="dietary-checkbox"> Vegan</label>
+                                <label><input type="checkbox" value="gluten-free" class="dietary-checkbox"> Gluten-Free</label>
+                                <label><input type="checkbox" value="dairy-free" class="dietary-checkbox"> Dairy-Free</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Ingredients</h3>
+                        <div id="ingredientsList"></div>
+                        <button type="button" class="add-item-btn" id="addIngredientBtn">+ Add Ingredient</button>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Instructions</h3>
+                        <div id="stepsList"></div>
+                        <button type="button" class="add-item-btn" id="addStepBtn">+ Add Step</button>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Additional Info (Optional)</h3>
+                        
+                        <div class="form-group">
+                            <label for="tips">Tips & Tricks</label>
+                            <textarea id="tips" placeholder="Any helpful tips for making this recipe?"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="substitutions">Substitutions & Variations</label>
+                            <textarea id="substitutions" placeholder="Alternative ingredients or variations?"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelFormBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Recipe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalHeader">
+                <button class="close-modal" id="closeModal">×</button>
+                <button class="jump-to-recipe" onclick="document.getElementById('recipeContent').scrollIntoView({behavior: 'smooth'})">
+                    Jump to Recipe ↓
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Recipe details will be inserted here by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-edit" id="editRecipeBtn">✏️ Edit Recipe</button>
+                <button class="btn-delete" id="deleteRecipeBtn">🗑️ Delete Recipe</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
